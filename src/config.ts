@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable operator-linebreak */
 import type { ApiTonWalletVersion } from './api/chains/ton/types';
 import type {
   ApiBaseCurrency,
@@ -19,8 +21,8 @@ export const APP_ENV_MARKER = APP_ENV === 'staging' ? 'Beta' : APP_ENV === 'deve
 export const EXTENSION_NAME = IS_CORE_WALLET ? 'TON Wallet' : 'MyTonWallet · My TON Wallet';
 export const EXTENSION_DESCRIPTION = IS_CORE_WALLET
   ? 'Set up your own TON Wallet on The Open Network'
-  // eslint-disable-next-line max-len
-  : 'The most feature-rich TON extension – with support of multi-accounts, tokens, NFT, TON DNS, TON Sites, TON Proxy, and TON Magic.';
+  : // eslint-disable-next-line max-len
+  'The most feature-rich TON extension – with support of multi-accounts, tokens, NFT, TON DNS, TON Sites, TON Proxy, and TON Magic.';
 
 export const DEBUG = APP_ENV !== 'production' && APP_ENV !== 'perf' && APP_ENV !== 'test';
 export const DEBUG_MORE = false;
@@ -110,6 +112,8 @@ export const TONAPIIO_TESTNET_URL = process.env.TONAPIIO_TESTNET_URL || 'https:/
 
 export const BRILLIANT_API_BASE_URL = process.env.BRILLIANT_API_BASE_URL || 'https://api.mytonwallet.org';
 
+export const GASLESS_API_BASE_URL = process.env.GASLESS_API_BASE_URL;
+
 export const TRON_MAINNET_API_URL = process.env.TRON_MAINNET_API_URL || 'https://tronapi.mytonwallet.org';
 export const TRON_TESTNET_API_URL = process.env.TRON_TESTNET_API_URL || 'https://api.shasta.trongrid.io';
 
@@ -146,59 +150,70 @@ export const TINY_TRANSFER_MAX_COST = 0.01;
 export const IMAGE_CACHE_NAME = 'mtw-image';
 export const LANG_CACHE_NAME = 'mtw-lang-193';
 
-export const LANG_LIST: LangItem[] = [{
-  langCode: 'en',
-  name: 'English',
-  nativeName: 'English',
-  rtl: false,
-}, {
-  langCode: 'es',
-  name: 'Spanish',
-  nativeName: 'Español',
-  rtl: false,
-}, {
-  langCode: 'ru',
-  name: 'Russian',
-  nativeName: 'Русский',
-  rtl: false,
-}, {
-  langCode: 'zh-Hans',
-  name: 'Chinese (Simplified)',
-  nativeName: '简体',
-  rtl: false,
-}, {
-  langCode: 'zh-Hant',
-  name: 'Chinese (Traditional)',
-  nativeName: '繁體',
-  rtl: false,
-}, {
-  langCode: 'tr',
-  name: 'Turkish',
-  nativeName: 'Türkçe',
-  rtl: false,
-}, {
-  langCode: 'de',
-  name: 'German',
-  nativeName: 'Deutsch',
-  rtl: false,
-}, {
-  langCode: 'th',
-  name: 'Thai',
-  nativeName: 'ไทย',
-  rtl: false,
-}, {
-  langCode: 'uk',
-  name: 'Ukrainian',
-  nativeName: 'Українська',
-  rtl: false,
-}, {
-  langCode: 'pl',
-  name: 'Polish',
-  nativeName: 'Polski',
-  rtl: false,
-}];
+export const LANG_LIST: LangItem[] = [
+  {
+    langCode: 'en',
+    name: 'English',
+    nativeName: 'English',
+    rtl: false,
+  },
+  {
+    langCode: 'es',
+    name: 'Spanish',
+    nativeName: 'Español',
+    rtl: false,
+  },
+  {
+    langCode: 'ru',
+    name: 'Russian',
+    nativeName: 'Русский',
+    rtl: false,
+  },
+  {
+    langCode: 'zh-Hans',
+    name: 'Chinese (Simplified)',
+    nativeName: '简体',
+    rtl: false,
+  },
+  {
+    langCode: 'zh-Hant',
+    name: 'Chinese (Traditional)',
+    nativeName: '繁體',
+    rtl: false,
+  },
+  {
+    langCode: 'tr',
+    name: 'Turkish',
+    nativeName: 'Türkçe',
+    rtl: false,
+  },
+  {
+    langCode: 'de',
+    name: 'German',
+    nativeName: 'Deutsch',
+    rtl: false,
+  },
+  {
+    langCode: 'th',
+    name: 'Thai',
+    nativeName: 'ไทย',
+    rtl: false,
+  },
+  {
+    langCode: 'uk',
+    name: 'Ukrainian',
+    nativeName: 'Українська',
+    rtl: false,
+  },
+  {
+    langCode: 'pl',
+    name: 'Polish',
+    nativeName: 'Polski',
+    rtl: false,
+  },
+];
 
-export const IS_STAKING_DISABLED = IS_CORE_WALLET;
+export const IS_STAKING_DISABLED = true;
 export const STAKING_CYCLE_DURATION_MS = 131_072_000; // 36.4 hours
 export const VALIDATION_PERIOD_MS = 65_536_000; // 18.2 h.
 export const ONE_TON = 1_000_000_000n;
@@ -296,12 +311,7 @@ export const ETHENA_STAKING_MIN_AMOUNT = 1_000_000; // 1 USDe
 
 // In cross-chain swaps, only a few TON/TRON tokens are available.
 // It's not optimal to request swap history for all the others.
-export const SWAP_CROSSCHAIN_SLUGS = new Set([
-  TRX.slug,
-  TRC20_USDT_MAINNET_SLUG,
-  TONCOIN.slug,
-  TON_USDT_SLUG,
-]);
+export const SWAP_CROSSCHAIN_SLUGS = new Set([TRX.slug, TRC20_USDT_MAINNET_SLUG, TONCOIN.slug, TON_USDT_SLUG]);
 
 export const STON_PTON_ADDRESS = 'EQCM3B12QK1e4yZSf8GtBRT0aLMNyEsBc_DhVfRRtOEffLez';
 
@@ -343,22 +353,25 @@ export const TON_TSUSDE = {
   image: 'https://metadata.layerzero-api.com/assets/tsUSDe.png',
 } as const;
 
-export const ALL_STAKING_POOLS = [
-  LIQUID_POOL,
-  MYCOIN_STAKING_POOL,
-  ETHENA_STAKING_VAULT,
-  TON_TSUSDE.tokenAddress,
-];
+export const ALL_STAKING_POOLS = [LIQUID_POOL, MYCOIN_STAKING_POOL, ETHENA_STAKING_VAULT, TON_TSUSDE.tokenAddress];
 
 export const DEFAULT_ENABLED_TOKEN_SLUGS = [
-  TRX.slug, TRC20_USDT_MAINNET_SLUG, TRC20_USDT_TESTNET_SLUG, TONCOIN.slug, TON_USDT_SLUG,
+  TRX.slug,
+  TRC20_USDT_MAINNET_SLUG,
+  TRC20_USDT_TESTNET_SLUG,
+  TONCOIN.slug,
+  TON_USDT_SLUG,
 ] as string[];
 
 // Toncoin, USDT TON, TRX, USDT TRC20
 export const DEFAULT_ENABLED_TOKEN_COUNT = 4;
 
 export const PRIORITY_TOKEN_SLUGS = [
-  TRX.slug, TRC20_USDT_MAINNET_SLUG, TRC20_USDT_TESTNET_SLUG, TONCOIN.slug, TON_USDT_SLUG,
+  TRX.slug,
+  TRC20_USDT_MAINNET_SLUG,
+  TRC20_USDT_TESTNET_SLUG,
+  TONCOIN.slug,
+  TON_USDT_SLUG,
 ] as string[];
 
 const COMMON_TOKEN = {
@@ -380,13 +393,15 @@ export const TOKEN_INFO: Record<string, ApiTokenWithPrice> = {
     ...TRX,
     ...COMMON_TOKEN,
   },
-  [TRC20_USDT_MAINNET_SLUG]: { // mainnet
+  [TRC20_USDT_MAINNET_SLUG]: {
+    // mainnet
     ...TRC20_USDT,
     slug: TRC20_USDT_MAINNET_SLUG,
     tokenAddress: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
     ...COMMON_TOKEN,
   },
-  [TRC20_USDT_TESTNET_SLUG]: { // testnet
+  [TRC20_USDT_TESTNET_SLUG]: {
+    // testnet
     ...TRC20_USDT,
     slug: TRC20_USDT_TESTNET_SLUG,
     tokenAddress: 'TG3XXyExBkPp9nzdajDZsozEu4BkaSJozs',
@@ -395,14 +410,16 @@ export const TOKEN_INFO: Record<string, ApiTokenWithPrice> = {
   [TON_USDT_SLUG]: {
     ...TON_USDT,
     // eslint-disable-next-line max-len
-    image: 'https://cache.tonapi.io/imgproxy/T3PB4s7oprNVaJkwqbGg54nexKE0zzKhcrPv8jcWYzU/rs:fill:200:200:1/g:no/aHR0cHM6Ly90ZXRoZXIudG8vaW1hZ2VzL2xvZ29DaXJjbGUucG5n.webp',
+    image:
+      'https://cache.tonapi.io/imgproxy/T3PB4s7oprNVaJkwqbGg54nexKE0zzKhcrPv8jcWYzU/rs:fill:200:200:1/g:no/aHR0cHM6Ly90ZXRoZXIudG8vaW1hZ2VzL2xvZ29DaXJjbGUucG5n.webp',
     slug: TON_USDT_SLUG,
     ...COMMON_TOKEN,
   },
   [MYCOIN.slug]: {
     ...MYCOIN,
     // eslint-disable-next-line max-len
-    image: 'https://cache.tonapi.io/imgproxy/Qy038wCBKISofJ0hYMlj6COWma330cx3Ju1ZSPM2LRU/rs:fill:200:200:1/g:no/aHR0cHM6Ly9teXRvbndhbGxldC5pby9sb2dvLTI1Ni1ibHVlLnBuZw.webp',
+    image:
+      'https://cache.tonapi.io/imgproxy/Qy038wCBKISofJ0hYMlj6COWma330cx3Ju1ZSPM2LRU/rs:fill:200:200:1/g:no/aHR0cHM6Ly9teXRvbndhbGxldC5pby9sb2dvLTI1Ni1ibHVlLnBuZw.webp',
     ...COMMON_TOKEN,
   },
   [TON_USDE.slug]: {
@@ -439,7 +456,8 @@ export const INIT_SWAP_ASSETS: Record<string, ApiSwapAsset> = {
     slug: TON_USDT_SLUG,
     decimals: 9,
     // eslint-disable-next-line max-len
-    image: 'https://cache.tonapi.io/imgproxy/T3PB4s7oprNVaJkwqbGg54nexKE0zzKhcrPv8jcWYzU/rs:fill:200:200:1/g:no/aHR0cHM6Ly90ZXRoZXIudG8vaW1hZ2VzL2xvZ29DaXJjbGUucG5n.webp',
+    image:
+      'https://cache.tonapi.io/imgproxy/T3PB4s7oprNVaJkwqbGg54nexKE0zzKhcrPv8jcWYzU/rs:fill:200:200:1/g:no/aHR0cHM6Ly90ZXRoZXIudG8vaW1hZ2VzL2xvZ29DaXJjbGUucG5n.webp',
     tokenAddress: 'EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs',
     price: 0,
     priceUsd: 0,
@@ -530,9 +548,11 @@ export const MINT_CARD_COMMENT = 'Mint card';
 export const MINT_CARD_REFUND_COMMENT = 'Refund';
 
 // eslint-disable-next-line max-len
-export const RE_LINK_TEMPLATE = /((ftp|https?):\/\/)?(?<host>(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z][-a-zA-Z0-9]{1,62})\b([-a-zA-Z0-9()@:%_+.,~#?&/=]*)/g;
+export const RE_LINK_TEMPLATE =
+  /((ftp|https?):\/\/)?(?<host>(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z][-a-zA-Z0-9]{1,62})\b([-a-zA-Z0-9()@:%_+.,~#?&/=]*)/g;
 // eslint-disable-next-line max-len
-export const RE_TG_BOT_MENTION = /telegram[:\s-]*((@[a-z0-9_]+)|(https:\/\/)?(t\.me|telegram\.me|telegram\.dog)\/[a-z0-9_]+)/mig;
+export const RE_TG_BOT_MENTION =
+  /telegram[:\s-]*((@[a-z0-9_]+)|(https:\/\/)?(t\.me|telegram\.me|telegram\.dog)\/[a-z0-9_]+)/gim;
 
 export const STARS_SYMBOL = '⭐️';
 
@@ -579,11 +599,7 @@ export const PRICELESS_TOKEN_HASHES = new Set([
   'ddf80de336d580ab3c11d194f189c362e2ca1225cae224ea921deeaba7eca818', // tsUSDe EQDQ5UUyPHrLcQJlPAczd_fjxn8SLrlNQwolBznxCdSlfQwr
 ]);
 
-export const STAKED_TOKEN_SLUGS = new Set([
-  STAKED_TON_SLUG,
-  STAKED_MYCOIN_SLUG,
-  TON_TSUSDE.slug,
-]);
+export const STAKED_TOKEN_SLUGS = new Set([STAKED_TON_SLUG, STAKED_MYCOIN_SLUG, TON_TSUSDE.slug]);
 
 export const DEFAULT_OUR_SWAP_FEE = 0.875;
 

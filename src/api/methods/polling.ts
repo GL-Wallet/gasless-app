@@ -78,7 +78,7 @@ export async function setupLongBackendPolling() {
 
     await Promise.all([
       tryUpdateKnownAddresses(),
-      tryUpdateStakingCommonData(),
+      // tryUpdateStakingCommonData(),
       tryUpdateConfig(localOnUpdate),
       tryUpdateSwapTokens(localOnUpdate),
     ]);
