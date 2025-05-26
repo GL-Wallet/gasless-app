@@ -1,12 +1,12 @@
 const MANIFEST_URL = 'https://checkin.mytonwallet.org/tonconnect-manifest.json';
-const JSBRIDGE_KEY = 'mytonwallet';
+const JSBRIDGE_KEY = 'gasless';
 const UNIVERSAL_LINK = 'https://connect.mytonwallet.org';
 const BRIDGE_URL = 'https://tonconnectbridge.mytonwallet.org/bridge';
 
 const CAPTCHA_KEY = '0x4AAAAAAAWP-ib_cL3bojOS';
 
 const REF_LINK_PREFIX = 'https://my.tt/r/';
-const BOT_USERNAME = 'MyTonWalletBot';
+const BOT_USERNAME = 'GaslessBot';
 
 let captchaLoadedResolve = undefined;
 let captchaLoadedPromise = new Promise((resolve) => {
@@ -61,7 +61,7 @@ async function connect() {
 }
 
 async function handleConnectorStatusChange(walletInfo) {
-  if (walletInfo?.device?.appName !== 'MyTonWallet') {
+  if (walletInfo?.device?.appName !== 'Gasless') {
     connect();
     return;
   }

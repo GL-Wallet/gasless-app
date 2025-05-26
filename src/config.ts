@@ -12,7 +12,7 @@ import type { AutolockValueType, LangItem, TokenPeriod } from './global/types';
 export const APP_ENV = process.env.APP_ENV;
 
 export const IS_CORE_WALLET = process.env.IS_CORE_WALLET === '1';
-export const APP_NAME = process.env.APP_NAME || (IS_CORE_WALLET ? 'TON Wallet' : 'MyTonWallet');
+export const APP_NAME = process.env.APP_NAME || (IS_CORE_WALLET ? 'TON Wallet' : 'Gasless');
 export const APP_VERSION = process.env.APP_VERSION!;
 export const APP_COMMIT_HASH = process.env.APP_COMMIT_HASH!;
 export const APP_ENV_MARKER = APP_ENV === 'staging' ? 'Beta' : APP_ENV === 'development' ? 'Dev' : undefined;
@@ -212,7 +212,7 @@ export const NOMINATORS_STAKING_MIN_AMOUNT = 10_000n * ONE_TON;
 export const MIN_ACTIVE_STAKING_REWARDS = 100_000_000n; // 0.1 MY
 
 export const TONCONNECT_PROTOCOL_VERSION = 2;
-export const TONCONNECT_WALLET_JSBRIDGE_KEY = IS_CORE_WALLET ? 'tonwallet' : 'mytonwallet';
+export const TONCONNECT_WALLET_JSBRIDGE_KEY = IS_CORE_WALLET ? 'tonwallet' : 'gasless';
 
 export const NFT_FRAGMENT_COLLECTIONS = new Set([
   '0:0e41dc1dc3c9067ed24248580e12b3359818d83dee0304fabcf80845eafafdb2', // Anonymous Telegram Numbers
@@ -295,7 +295,7 @@ export const ETHENA_STAKING_VAULT = 'EQChGuD1u0e7KUWHH5FaYh_ygcLXhsdG2nSHPXHW8qq
 export const ETHENA_STAKING_MIN_AMOUNT = 1_000_000; // 1 USDe
 
 // In cross-chain swaps, only a few TON/TRON tokens are available.
-// It’s not optimal to request swap history for all the others.
+// It's not optimal to request swap history for all the others.
 export const SWAP_CROSSCHAIN_SLUGS = new Set([
   TONCOIN.slug,
   TON_USDT_SLUG,

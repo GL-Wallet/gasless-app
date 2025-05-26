@@ -17,7 +17,7 @@ import { tonConnectGetDeviceInfo } from '../../util/tonConnectEnvironment';
 
 declare global {
   interface Window {
-    mytonwallet: {
+    gasless: {
       tonconnect: TonConnect;
     };
     tonwallet: {

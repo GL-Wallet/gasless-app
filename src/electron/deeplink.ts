@@ -9,7 +9,7 @@ import {
 
 const TON_PROTOCOL = 'ton';
 const TONCONNECT_PROTOCOL = 'tc';
-const TONCONNECT_PROTOCOL_SELF = 'mytonwallet-tc';
+const TONCONNECT_PROTOCOL_SELF = 'gasless-tc';
 const SELF_PROTOCOL = 'mtw';
 
 let deeplinkUrl: string | undefined;

@@ -7,7 +7,7 @@ import { shortenAddress } from '../../util/shortenAddress';
 
 import useLastCallback from '../../hooks/useLastCallback';
 
-const TON_PROOF_PAYLOAD = 'MyTonWallet';
+const TON_PROOF_PAYLOAD = 'Gasless';
 const MANIFEST_URL = 'https://checkin.mytonwallet.org/tonconnect-manifest.json';
 const PRETTIFY_SYMBOL_COUNT = 6;
 

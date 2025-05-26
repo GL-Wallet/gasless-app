@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyTonWallet Connect</title>
+    <title>Gasless Connect</title>
     <link rel="stylesheet" href="/index.css">
 </head>
 <body class="loading">
 <div class="container no-flex small-padding with-gap">
-    <h1>Connect <span class="gradient-text">MyTonWallet</span></h1>
+    <h1>Connect <span class="gradient-text">Gasless</span></h1>
     <info-block>
         <p>
             <b class="gradient-text">1.</b> Launch the app and log into your wallet.
         </p>
-        <a href="https://get.mytonwallet.io" target="_blank" class="download-btn">Install MyTonWallet</a>
+        <a href="https://get.mytonwallet.io" target="_blank" class="download-btn">Install Gasless</a>
     </info-block>
     <info-block>
         <p>
-            <b class="gradient-text">2.</b> Once you launched MyTonWallet,<br />proceed by clicking the button below.
+            <b class="gradient-text">2.</b> Once you launched Gasless,<br />proceed by clicking the button below.
         </p>
-        <a href="mytonwallet-tc://" id="btn-sign-in" class="download-btn">
-            Open MyTonWallet
+        <a href="gasless-tc://" id="btn-sign-in" class="download-btn">
+            Open Gasless
         </a>
     </info-block>
     <info-block>
@@ -53,10 +53,10 @@
 
     onContentReady();
 
-    document.getElementById('btn-sign-in').href = `mytonwallet-tc://${redirectTo}`;
+    document.getElementById('btn-sign-in').href = `gasless-tc://${redirectTo}`;
 
     if (!search?.includes('no-redirect')) {
-      location.href = `mytonwallet-tc://${redirectTo}`;
+      location.href = `gasless-tc://${redirectTo}`;
       history.replaceState({}, '', `${pathname}${search}${search ? '&' : '?'}no-redirect`);
     }
   }

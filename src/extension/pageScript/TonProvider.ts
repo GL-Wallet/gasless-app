@@ -20,7 +20,7 @@ type Methods =
   | 'ton_rawSign';
 
 export class TonProvider extends EventEmitter {
-  public isMyTonWallet = !IS_CORE_WALLET;
+  public isGasless = !IS_CORE_WALLET;
 
   public isTonWallet = true; // Native extension legacy requirement
 
@@ -29,7 +29,7 @@ export class TonProvider extends EventEmitter {
   }
 
   destroy() {
-    //  Because a user can install the MyTonWallet and CoreWallet extensions at the same time, there may be a conflict
+    //  Because a user can install the Gasless and CoreWallet extensions at the same time, there may be a conflict
     //  when destroying the Connector instance. Therefore, we simply delete the reference to the Connector.
     this.apiConnector = undefined;
   }
