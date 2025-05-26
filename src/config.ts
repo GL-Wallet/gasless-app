@@ -96,7 +96,7 @@ export const ANIMATION_LEVEL_MAX = 2;
 export const ANIMATION_LEVEL_DEFAULT = ANIMATION_LEVEL_MAX;
 export const THEME_DEFAULT = 'system';
 
-export const MAIN_ACCOUNT_ID = '0-ton-mainnet';
+export const MAIN_ACCOUNT_ID = '0-tron-mainnet';
 
 export const TONCENTER_MAINNET_URL = process.env.TONCENTER_MAINNET_URL || 'https://toncenter.mytonwallet.org';
 export const TONCENTER_MAINNET_KEY = process.env.TONCENTER_MAINNET_KEY;
@@ -259,13 +259,6 @@ export const MYCOIN_TESTNET = {
 } as const;
 
 export const CHAIN_CONFIG = {
-  ton: {
-    isMemoSupported: true,
-    isDnsSupported: true,
-    addressRegex: /^([-\w_]{48}|0:[\da-h]{64})$/i,
-    addressPrefixRegex: /^([-\w_]{1,48}|0:[\da-h]{0,64})$/i,
-    nativeToken: TONCOIN,
-  },
   tron: {
     isMemoSupported: false,
     isDnsSupported: false,
@@ -280,6 +273,13 @@ export const CHAIN_CONFIG = {
       apiUrl: TRON_TESTNET_API_URL,
       usdtAddress: 'TG3XXyExBkPp9nzdajDZsozEu4BkaSJozs',
     },
+  },
+  ton: {
+    isMemoSupported: true,
+    isDnsSupported: true,
+    addressRegex: /^([-\w_]{48}|0:[\da-h]{64})$/i,
+    addressPrefixRegex: /^([-\w_]{1,48}|0:[\da-h]{0,64})$/i,
+    nativeToken: TONCOIN,
   },
 } as const;
 
@@ -297,10 +297,10 @@ export const ETHENA_STAKING_MIN_AMOUNT = 1_000_000; // 1 USDe
 // In cross-chain swaps, only a few TON/TRON tokens are available.
 // It's not optimal to request swap history for all the others.
 export const SWAP_CROSSCHAIN_SLUGS = new Set([
-  TONCOIN.slug,
-  TON_USDT_SLUG,
   TRX.slug,
   TRC20_USDT_MAINNET_SLUG,
+  TONCOIN.slug,
+  TON_USDT_SLUG,
 ]);
 
 export const STON_PTON_ADDRESS = 'EQCM3B12QK1e4yZSf8GtBRT0aLMNyEsBc_DhVfRRtOEffLez';
@@ -351,14 +351,14 @@ export const ALL_STAKING_POOLS = [
 ];
 
 export const DEFAULT_ENABLED_TOKEN_SLUGS = [
-  TONCOIN.slug, TON_USDT_SLUG, TRX.slug, TRC20_USDT_TESTNET_SLUG, TRC20_USDT_MAINNET_SLUG,
+  TRX.slug, TRC20_USDT_MAINNET_SLUG, TRC20_USDT_TESTNET_SLUG, TONCOIN.slug, TON_USDT_SLUG,
 ] as string[];
 
 // Toncoin, USDT TON, TRX, USDT TRC20
 export const DEFAULT_ENABLED_TOKEN_COUNT = 4;
 
 export const PRIORITY_TOKEN_SLUGS = [
-  TONCOIN.slug, TON_USDT_SLUG, TRX.slug,
+  TRX.slug, TRC20_USDT_MAINNET_SLUG, TRC20_USDT_TESTNET_SLUG, TONCOIN.slug, TON_USDT_SLUG,
 ] as string[];
 
 const COMMON_TOKEN = {
@@ -447,10 +447,10 @@ export const INIT_SWAP_ASSETS: Record<string, ApiSwapAsset> = {
   },
 };
 
-export const DEFAULT_TRX_SWAP_FIRST_TOKEN_SLUG = TONCOIN.slug;
-export const DEFAULT_SWAP_FISRT_TOKEN_SLUG = TONCOIN.slug;
-export const DEFAULT_SWAP_SECOND_TOKEN_SLUG = TON_USDT_SLUG;
-export const DEFAULT_TRANSFER_TOKEN_SLUG = TONCOIN.slug;
+export const DEFAULT_TRX_SWAP_FIRST_TOKEN_SLUG = TRX.slug;
+export const DEFAULT_SWAP_FISRT_TOKEN_SLUG = TRX.slug;
+export const DEFAULT_SWAP_SECOND_TOKEN_SLUG = TRC20_USDT_MAINNET_SLUG;
+export const DEFAULT_TRANSFER_TOKEN_SLUG = TRX.slug;
 export const DEFAULT_CEX_SWAP_SECOND_TOKEN_SLUG = TRC20_USDT_MAINNET_SLUG;
 export const SWAP_DEX_LABELS: Record<ApiSwapDexLabel, string> = {
   dedust: 'DeDust',
@@ -477,25 +477,11 @@ export const SHORT_CURRENCY_SYMBOL_MAP = {
   CNY: '¥',
 };
 export const CURRENCY_LIST: { value: ApiBaseCurrency; name: string }[] = [
-  {
-    value: 'USD',
-    name: 'US Dollar',
-  }, {
-    value: 'EUR',
-    name: 'Euro',
-  }, {
-    value: 'RUB',
-    name: 'Ruble',
-  }, {
-    value: 'CNY',
-    name: 'Yuan',
-  }, {
-    value: 'BTC',
-    name: 'Bitcoin',
-  }, {
-    value: TONCOIN.symbol,
-    name: 'Toncoin',
-  },
+  { value: 'USD', name: 'US Dollar' },
+  { value: 'EUR', name: 'Euro' },
+  { value: 'RUB', name: 'Ruble' },
+  { value: 'CNY', name: 'Yuan' },
+  { value: 'BTC', name: 'Bitcoin' },
 ];
 
 export const BURN_ADDRESS = 'UQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJKZ';

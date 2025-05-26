@@ -554,7 +554,6 @@ function Token({
 
   return (
     <div
-
       className={buildClassName(
         styles.tokenContainer,
         !isAvailable && styles.tokenContainerDisabled,
