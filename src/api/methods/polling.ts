@@ -48,13 +48,13 @@ export async function initPolling(_onUpdate: OnApiUpdate) {
     tryUpdateKnownAddresses(),
     tryUpdateTokens(_onUpdate),
     tryUpdateSwapTokens(_onUpdate),
-    tryUpdateStakingCommonData(),
+    // tryUpdateStakingCommonData(),
   ]).then(() => resolveDataPreloadPromise());
 
-  void tryUpdateConfig(_onUpdate);
+  // void tryUpdateConfig(_onUpdate);
 
-  void setupBackendPolling();
-  void setupLongBackendPolling();
+  // void setupBackendPolling();
+  // void setupLongBackendPolling();
   if (IS_AIR_APP) {
     void ton.setupInactiveAccountsBalancePolling(onUpdate);
     void tron.setupInactiveAccountsBalancePolling(onUpdate);
@@ -78,7 +78,7 @@ export async function setupLongBackendPolling() {
 
     await Promise.all([
       tryUpdateKnownAddresses(),
-      // tryUpdateStakingCommonData(),
+      tryUpdateStakingCommonData(),
       tryUpdateConfig(localOnUpdate),
       tryUpdateSwapTokens(localOnUpdate),
     ]);
