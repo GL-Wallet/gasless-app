@@ -30,8 +30,8 @@ type OwnProps = {
   onClose?: NoneToVoidFunction;
 };
 
-const TON_TAB_ID = 0;
-const TRON_TAB_ID = 1;
+const TRON_TAB_ID = 0;
+const TON_TAB_ID = 1;
 
 function Content({
   isOpen, addressByChain, isStatic, isLedger, onClose,
@@ -44,17 +44,17 @@ function Content({
 
   const tabs = useMemo(() => {
     const result: TabWithProperties[] = [];
-    if (addressByChain?.ton) {
-      result.push({
-        id: TON_TAB_ID,
-        title: 'TON',
-        className: styles.tab,
-      });
-    }
     if (addressByChain?.tron) {
       result.push({
         id: TRON_TAB_ID,
         title: 'TRON',
+        className: styles.tab,
+      });
+    }
+    if (addressByChain?.ton) {
+      result.push({
+        id: TON_TAB_ID,
+        title: 'TON',
         className: styles.tab,
       });
     }
@@ -65,11 +65,11 @@ function Content({
   const [activeTab, setActiveTab] = useState<number>(tabs.length ? tabs[0].id : 0);
 
   function renderActions() {
-    if (tabs[activeTab]?.id === TRON_TAB_ID) {
-      return <TronActions isStatic />;
+    if (tabs[activeTab]?.id === TON_TAB_ID) {
+      return <TonActions isStatic isLedger={isLedger} />;
     }
 
-    return <TonActions isStatic isLedger={isLedger} />;
+    return <TronActions isStatic />;
   }
 
   // eslint-disable-next-line consistent-return

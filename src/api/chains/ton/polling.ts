@@ -4,7 +4,6 @@ import type {
   ApiBalanceBySlug,
   ApiNetwork,
   ApiNftUpdate,
-  ApiStakingState,
   ApiTokenWithPrice,
   ApiTonWallet,
   ApiUpdatingStatus,
@@ -35,7 +34,6 @@ import {
   getActiveAccountId,
   updateStoredTonWallet,
 } from '../../common/accounts';
-import { getStakingCommonCache } from '../../common/cache';
 import { isAlive, isUpdaterAlive } from '../../common/helpers';
 import { processNftUpdates, updateAccountNfts } from '../../common/nft';
 import { swapReplaceCexActivities } from '../../common/swap';
@@ -48,7 +46,6 @@ import { fetchActivitySlice } from './activities';
 import { getWalletFromAddress } from './auth';
 import { getAccountNfts, getNftUpdates } from './nfts';
 import { updateTokenHashes } from './priceless';
-import { getBackendStakingState, getStakingStates } from './staking';
 import { getAccountTokenBalances } from './tokens';
 import { fetchVestings } from './vesting';
 import { getWalletInfo, getWalletVersionInfos, isAddressInitialized } from './wallet';
@@ -62,8 +59,8 @@ const DOUBLE_CHECK_ACTIVITIES_PAUSE = 10 * SEC; // TODO (actions) Can it be redu
 const FORCE_CHECK_ACTIVITIES_PAUSE = 30 * SEC;
 const NFT_FULL_INTERVAL = 60 * SEC;
 
-const STAKING_INTERVAL = 5 * SEC;
-const STAKING_INTERVAL_WHEN_NOT_FOCUSED = 10 * SEC;
+// const STAKING_INTERVAL = 5 * SEC;
+// const STAKING_INTERVAL_WHEN_NOT_FOCUSED = 10 * SEC;
 
 const VERSIONS_INTERVAL = 5 * 60 * SEC;
 const VERSIONS_INTERVAL_WHEN_NOT_FOCUSED = 15 * 60 * SEC;
@@ -94,7 +91,7 @@ export function setupPolling(
   void setupWalletVersionsPolling(accountId, onUpdate);
 
   if (!IS_CORE_WALLET) {
-    void setupStakingPolling(accountId, onUpdate);
+    // void setupStakingPolling(accountId, onUpdate);
     void setupVestingPolling(accountId, onUpdate);
   }
 }
@@ -274,53 +271,53 @@ function throwErrorIfUpdaterNotAlive(onUpdate: OnApiUpdate, accountId: string) {
   }
 }
 
-async function setupStakingPolling(accountId: string, onUpdate: OnApiUpdate) {
-  const { network } = parseAccountId(accountId);
+// async function setupStakingPolling(accountId: string, onUpdate: OnApiUpdate) {
+//   const { network } = parseAccountId(accountId);
 
-  if (network !== 'mainnet') {
-    return;
-  }
+//   if (network !== 'mainnet') {
+//     return;
+//   }
 
-  let lastStates: ApiStakingState[] | undefined;
+//   let lastStates: ApiStakingState[] | undefined;
 
-  while (isAlive(onUpdate, accountId)) {
-    try {
-      const common = getStakingCommonCache();
-      const balances = await getBalancesFromCache(accountId);
-      const backendState = await getBackendStakingState(accountId);
-      const states = await getStakingStates(accountId, common, backendState, balances);
+//   while (isAlive(onUpdate, accountId)) {
+//     try {
+//       const common = getStakingCommonCache();
+//       const balances = await getBalancesFromCache(accountId);
+//       const backendState = await getBackendStakingState(accountId);
+//       const states = await getStakingStates(accountId, common, backendState, balances);
 
-      const { shouldUseNominators, totalProfit } = backendState;
+//       const { shouldUseNominators, totalProfit } = backendState;
 
-      if (!isAlive(onUpdate, accountId)) return;
+//       if (!isAlive(onUpdate, accountId)) return;
 
-      if (!areDeepEqual(states, lastStates)) {
-        lastStates = states;
-        onUpdate({
-          type: 'updateStaking',
-          accountId,
-          states,
-          common,
-          totalProfit,
-          shouldUseNominators,
-        });
-      }
-    } catch (err) {
-      logDebugError('setupStakingPolling', err);
-    }
+//       if (!areDeepEqual(states, lastStates)) {
+//         lastStates = states;
+//         onUpdate({
+//           type: 'updateStaking',
+//           accountId,
+//           states,
+//           common,
+//           totalProfit,
+//           shouldUseNominators,
+//         });
+//       }
+//     } catch (err) {
+//       logDebugError('setupStakingPolling', err);
+//     }
 
-    await pauseOrFocus(STAKING_INTERVAL, STAKING_INTERVAL_WHEN_NOT_FOCUSED);
-  }
-}
+//     await pauseOrFocus(STAKING_INTERVAL, STAKING_INTERVAL_WHEN_NOT_FOCUSED);
+//   }
+// }
 
-async function getBalancesFromCache(accountId: string) {
-  if (!activeAccountCache || activeAccountCache.accountId !== accountId) {
-    throw new Error('Invalid balances cache');
-  }
+// async function getBalancesFromCache(accountId: string) {
+//   if (!activeAccountCache || activeAccountCache.accountId !== accountId) {
+//     throw new Error('Invalid balances cache');
+//   }
 
-  await activeAccountCache.deferred.promise;
-  return activeAccountCache.balances;
-}
+//   await activeAccountCache.deferred.promise;
+//   return activeAccountCache.balances;
+// }
 
 async function loadNewActivities(accountId: string, newestActivityTimestamp: number, onUpdate: OnApiUpdate) {
   let activities = await fetchActivitySlice(

@@ -303,6 +303,7 @@ export default function createConfig(
         TONAPIIO_MAINNET_URL: '',
         TONAPIIO_TESTNET_URL: '',
         BRILLIANT_API_BASE_URL: '',
+        GASLESS_API_BASE_URL: '',
         TRON_MAINNET_API_URL: '',
         TRON_TESTNET_API_URL: '',
         PROXY_HOSTS: '',

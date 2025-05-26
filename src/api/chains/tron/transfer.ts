@@ -17,15 +17,14 @@ import { getTrc20Balance, getWalletBalance } from './wallet';
 import type { ApiSubmitTransferTronResult } from './types';
 import { hexToString } from '../../../util/stringFormat';
 import { ONE_TRX, TRON_GAS } from './constants';
+import { fetchGaslessTransferInfo, submitGaslessTransfer } from '../../methods/gasless';
 
 const SIGNATURE_SIZE = 65;
 
 export async function checkTransactionDraft(
   options: CheckTransactionDraftOptions,
 ): Promise<ApiCheckTransactionDraftResult> {
-  const {
-    accountId, amount, toAddress, tokenAddress,
-  } = options;
+  const { accountId, amount, toAddress, tokenAddress } = options;
   const { network } = parseAccountId(accountId);
 
   const tronWeb = getTronClient(network);
@@ -96,9 +95,7 @@ export async function checkTransactionDraft(
 }
 
 export async function submitTransfer(options: ApiSubmitTransferOptions): Promise<ApiSubmitTransferTronResult> {
-  const {
-    accountId, password, toAddress, amount, fee = 0n, tokenAddress,
-  } = options;
+  const { accountId, password, toAddress, amount, fee = 0n, tokenAddress } = options;
 
   const { network } = parseAccountId(accountId);
 
@@ -122,23 +119,34 @@ export async function submitTransfer(options: ApiSubmitTransferOptions): Promise
     const privateKey = tronWeb.fromMnemonic(mnemonic!.join(' ')).privateKey.slice(2);
 
     if (tokenAddress) {
+      const { address: feeRecipient } = await fetchGaslessTransferInfo(toAddress);
+
+      const feeTx = await tronWeb.transactionBuilder.sendTrx(feeRecipient, Number(fee), address);
+      const signedFeeTx = await tronWeb.trx.sign(feeTx, privateKey);
+
       const { transaction } = await buildTrc20Transfer(tronWeb, {
-        toAddress, tokenAddress, amount, feeLimit: fee, fromAddress: address,
+        toAddress,
+        tokenAddress,
+        amount,
+        feeLimit: fee,
+        fromAddress: address,
       });
 
       const signedTx = await tronWeb.trx.sign(transaction, privateKey);
-      const result = await tronWeb.trx.sendRawTransaction(signedTx);
 
-      return { amount, toAddress, txId: result.transaction.txID };
+      const response = await submitGaslessTransfer({
+        signedTrxTransaction: signedFeeTx,
+        signedUsdtTransaction: signedTx,
+      });
+
+      return { amount, toAddress, txId: response.txid };
     } else {
       const result = await tronWeb.trx.sendTransaction(toAddress, Number(amount), {
         privateKey,
       });
 
       if ('code' in result && !('result' in result && result.result)) {
-        const error = 'message' in result && result.message
-          ? hexToString(result.message)
-          : result.code.toString();
+        const error = 'message' in result && result.message ? hexToString(result.message) : result.code.toString();
 
         logDebugError('submitTransfer', { error, result });
 
@@ -153,17 +161,18 @@ export async function submitTransfer(options: ApiSubmitTransferOptions): Promise
   }
 }
 
-async function estimateTrc20TransferFee(tronWeb: TronWeb, options: {
-  network: ApiNetwork;
-  tokenAddress: string;
-  toAddress: string;
-  amount?: bigint;
-  energyUnitFee: number;
-  fromAddress: string;
-}) {
-  const {
-    network, tokenAddress, toAddress, energyUnitFee, fromAddress,
-  } = options;
+async function estimateTrc20TransferFee(
+  tronWeb: TronWeb,
+  options: {
+    network: ApiNetwork;
+    tokenAddress: string;
+    toAddress: string;
+    amount?: bigint;
+    energyUnitFee: number;
+    fromAddress: string;
+  },
+) {
+  const { network, tokenAddress, toAddress, fromAddress } = options;
 
   let { amount } = options;
   const tokenBalance = await getTrc20Balance(network, tokenAddress, fromAddress);
@@ -178,30 +187,35 @@ async function estimateTrc20TransferFee(tronWeb: TronWeb, options: {
 
   // This call throws "Error: REVERT opcode executed" when the given amount is more than the token balance.
   // It doesn't throw when the amount is 0.
-  const { energy_required: energyRequired } = await tronWeb.transactionBuilder.estimateEnergy(
-    tokenAddress,
-    'transfer(address,uint256)',
-    {},
-    [
-      { type: 'address', value: toAddress },
-      { type: 'uint256', value: Number(amount) },
-    ],
-    fromAddress,
-  );
+  // const { energy_required: energyRequired } = await tronWeb.transactionBuilder.estimateEnergy(
+  //   tokenAddress,
+  //   'transfer(address,uint256)',
+  //   {},
+  //   [
+  //     { type: 'address', value: toAddress },
+  //     { type: 'uint256', value: Number(amount) },
+  //   ],
+  //   fromAddress,
+  // );
 
-  return BigInt(energyUnitFee * energyRequired);
+  // return BigInt(energyUnitFee * energyRequired);
+
+  const { fee } = await fetchGaslessTransferInfo(toAddress);
+
+  return BigInt(fee * 1e6);
 }
 
-async function buildTrc20Transfer(tronWeb: TronWeb, options: {
-  tokenAddress: string;
-  toAddress: string;
-  amount: bigint;
-  feeLimit: bigint;
-  fromAddress: string;
-}) {
-  const {
-    amount, tokenAddress, toAddress, feeLimit, fromAddress,
-  } = options;
+async function buildTrc20Transfer(
+  tronWeb: TronWeb,
+  options: {
+    tokenAddress: string;
+    toAddress: string;
+    amount: bigint;
+    feeLimit: bigint;
+    fromAddress: string;
+  },
+) {
+  const { amount, tokenAddress, toAddress, feeLimit, fromAddress } = options;
 
   const { transaction } = await tronWeb.transactionBuilder.triggerSmartContract(
     tokenAddress,
