@@ -1,7 +1,5 @@
 import type { OpenedContract } from '@ton/core';
-import {
-  Address, beginCell, Builder, Cell, Dictionary,
-} from '@ton/core';
+import { Address, beginCell, Builder, Cell, Dictionary } from '@ton/core';
 import { WalletContractV1R1 } from '@ton/ton/dist/wallets/WalletContractV1R1';
 import { WalletContractV1R2 } from '@ton/ton/dist/wallets/WalletContractV1R2';
 import { WalletContractV1R3 } from '@ton/ton/dist/wallets/WalletContractV1R3';
@@ -33,25 +31,27 @@ import { generateQueryId } from './index';
 
 import { TonClient } from './TonClient';
 
-type TonWalletType = typeof WalletContractV1R1
-| typeof WalletContractV1R2
-| typeof WalletContractV1R3
-| typeof WalletContractV2R1
-| typeof WalletContractV2R2
-| typeof WalletContractV3R1
-| typeof WalletContractV3R2
-| typeof WalletContractV4
-| typeof WalletContractV5R1;
+type TonWalletType =
+  | typeof WalletContractV1R1
+  | typeof WalletContractV1R2
+  | typeof WalletContractV1R3
+  | typeof WalletContractV2R1
+  | typeof WalletContractV2R2
+  | typeof WalletContractV3R1
+  | typeof WalletContractV3R2
+  | typeof WalletContractV4
+  | typeof WalletContractV5R1;
 
-export type TonWallet = WalletContractV1R1
-| WalletContractV1R2
-| WalletContractV1R3
-| WalletContractV2R1
-| WalletContractV2R2
-| WalletContractV3R1
-| WalletContractV3R2
-| WalletContractV4
-| WalletContractV5R1;
+export type TonWallet =
+  | WalletContractV1R1
+  | WalletContractV1R2
+  | WalletContractV1R3
+  | WalletContractV2R1
+  | WalletContractV2R2
+  | WalletContractV3R1
+  | WalletContractV3R2
+  | WalletContractV4
+  | WalletContractV5R1;
 
 const TON_MAX_COMMENT_BYTES = 127;
 
@@ -71,20 +71,20 @@ export const walletClassMap: Record<ApiTonWalletVersion, TonWalletType> = {
 
 export function getTonClient(network: ApiNetwork = 'mainnet') {
   if (!clientByNetwork) {
-    const { apiHeaders, toncenterMainnetKey, toncenterTestnetKey } = getEnvironment();
+    const { toncenterMainnetKey, toncenterTestnetKey } = getEnvironment();
 
     clientByNetwork = {
       mainnet: new TonClient({
         endpoint: `${TONCENTER_MAINNET_URL}/api/v2/jsonRPC`,
         timeout: DEFAULT_TIMEOUT,
         apiKey: toncenterMainnetKey,
-        headers: apiHeaders,
+        // headers: apiHeaders,
       }),
       testnet: new TonClient({
         endpoint: `${TONCENTER_TESTNET_URL}/api/v2/jsonRPC`,
         timeout: DEFAULT_TIMEOUT,
         apiKey: toncenterTestnetKey,
-        headers: apiHeaders,
+        // headers: apiHeaders,
       }),
     };
   }
@@ -117,17 +117,19 @@ export const getWalletPublicKey = withCacheAsync(async (network: ApiNetwork, add
   return hexToBytes(hex);
 });
 
-export const getJettonPoolStakeWallet = withCacheAsync(async (
-  network: ApiNetwork,
-  poolAddress: string,
-  period: number,
-  address: string,
-): Promise<OpenedContract<StakeWallet>> => {
-  const tonClient = getTonClient(network);
-  const pool = tonClient.open(StakingPool.createFromAddress(Address.parse(poolAddress)));
-  const walletAddress = (await pool.getWalletAddress(Address.parse(address), period))!;
-  return tonClient.open(StakeWallet.createFromAddress(walletAddress));
-});
+export const getJettonPoolStakeWallet = withCacheAsync(
+  async (
+    network: ApiNetwork,
+    poolAddress: string,
+    period: number,
+    address: string,
+  ): Promise<OpenedContract<StakeWallet>> => {
+    const tonClient = getTonClient(network);
+    const pool = tonClient.open(StakingPool.createFromAddress(Address.parse(poolAddress)));
+    const walletAddress = (await pool.getWalletAddress(Address.parse(address), period))!;
+    return tonClient.open(StakeWallet.createFromAddress(walletAddress));
+  },
+);
 
 export function getJettonMinterData(network: ApiNetwork, address: string) {
   const contract = getTonClient(network).open(new JettonMinter(Address.parse(address)));
@@ -157,14 +159,7 @@ export function toRawAddress(address: Address | string) {
 }
 
 export function buildTokenTransferBody(params: TokenTransferBodyParams) {
-  const {
-    queryId,
-    tokenAmount,
-    toAddress,
-    responseAddress,
-    forwardAmount,
-    customPayload,
-  } = params;
+  const { queryId, tokenAmount, toAddress, responseAddress, forwardAmount, customPayload } = params;
   let forwardPayload = params.forwardPayload;
 
   let builder = new Builder()
@@ -184,15 +179,11 @@ export function buildTokenTransferBody(params: TokenTransferBodyParams) {
   if (!forwardPayload) {
     builder.storeBit(false);
   } else if (typeof forwardPayload === 'string') {
-    builder = builder.storeBit(false)
-      .storeUint(0, 32)
-      .storeBuffer(Buffer.from(forwardPayload));
+    builder = builder.storeBit(false).storeUint(0, 32).storeBuffer(Buffer.from(forwardPayload));
   } else if (forwardPayload instanceof Uint8Array) {
-    builder = builder.storeBit(false)
-      .storeBuffer(Buffer.from(forwardPayload));
+    builder = builder.storeBit(false).storeBuffer(Buffer.from(forwardPayload));
   } else {
-    builder = builder.storeBit(true)
-      .storeRef(forwardPayload);
+    builder = builder.storeBit(true).storeRef(forwardPayload);
   }
 
   return builder.endCell();
@@ -276,9 +267,7 @@ export function buildLiquidStakingWithdrawBody(options: {
   waitTillRoundEnd?: boolean; // opposite of request_immediate_withdrawal
   fillOrKill?: boolean;
 }) {
-  const {
-    queryId, amount, responseAddress, waitTillRoundEnd, fillOrKill,
-  } = options;
+  const { queryId, amount, responseAddress, waitTillRoundEnd, fillOrKill } = options;
 
   const customPayload = buildLiquidStakingWithdrawCustomPayload(waitTillRoundEnd, fillOrKill);
 
@@ -293,10 +282,7 @@ export function buildLiquidStakingWithdrawBody(options: {
 }
 
 export function buildLiquidStakingWithdrawCustomPayload(waitTillRoundEnd?: boolean, fillOrKill?: boolean) {
-  return new Builder()
-    .storeUint(Number(waitTillRoundEnd), 1)
-    .storeUint(Number(fillOrKill), 1)
-    .asCell();
+  return new Builder().storeUint(Number(waitTillRoundEnd), 1).storeUint(Number(fillOrKill), 1).asCell();
 }
 
 export function getTokenBalance(network: ApiNetwork, walletAddress: string) {
@@ -340,16 +326,13 @@ export function getIsRawAddress(address: string) {
 export async function getDnsItemDomain(network: ApiNetwork, address: Address | string) {
   if (typeof address === 'string') address = Address.parse(address);
 
-  const contract = getTonClient(network)
-    .open(new DnsItem(address));
+  const contract = getTonClient(network).open(new DnsItem(address));
   const nftData = await contract.getNftData();
   const collectionAddress = toBase64Address(nftData.collectionAddress, true);
 
   const zone = getDnsZoneByCollection(collectionAddress);
 
-  const base = zone?.isTelemint
-    ? await contract.getTelemintDomain()
-    : await contract.getDomain();
+  const base = zone?.isTelemint ? await contract.getTelemintDomain() : await contract.getDomain();
 
   return `${base}.${zone?.suffixes[0]}`;
 }
@@ -395,13 +378,9 @@ export function unpackDicts(obj: Record<string, any | Dictionary<any, any>>): An
 
 function isSimpleObject(obj: any) {
   // eslint-disable-next-line no-null/no-null
-  return obj !== null
-    && typeof obj === 'object'
-    && Object.getPrototypeOf(obj) === Object.prototype;
+  return obj !== null && typeof obj === 'object' && Object.getPrototypeOf(obj) === Object.prototype;
 }
 
 export function getOurFeePayload() {
-  return new Builder()
-    .storeUint(OpCode.OurFee, 32)
-    .endCell();
+  return new Builder().storeUint(OpCode.OurFee, 32).endCell();
 }
