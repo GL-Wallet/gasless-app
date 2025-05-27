@@ -128,7 +128,7 @@ export async function submitTransfer(options: ApiSubmitTransferOptions): Promise
         toAddress,
         tokenAddress,
         amount,
-        feeLimit: fee,
+        feeLimit: 100000000n,
         fromAddress: address,
       });
 
