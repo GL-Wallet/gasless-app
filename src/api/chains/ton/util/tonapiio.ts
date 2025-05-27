@@ -4,7 +4,6 @@ import type { ApiNetwork } from '../../../types';
 
 import { TONAPIIO_MAINNET_URL, TONAPIIO_TESTNET_URL } from '../../../../config';
 import { fetchWithRetry } from '../../../../util/fetch';
-import { getEnvironment } from '../../../environment';
 
 const MAX_LIMIT = 500;
 const EVENTS_LIMIT = 100;
@@ -14,7 +13,7 @@ let apiByNetwork: Record<ApiNetwork, Api<unknown>> | undefined;
 function getApi(network: ApiNetwork) {
   if (!apiByNetwork) {
     const headers = {
-      ...getEnvironment().apiHeaders,
+      // ...getEnvironment().apiHeaders,
       'Content-Type': 'application/json',
     };
 
