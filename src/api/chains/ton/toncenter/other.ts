@@ -2,7 +2,7 @@ import type { ApiNetwork, ApiWalletInfo } from '../../../types';
 import type { ApiTonWalletVersion } from '../types';
 import type { AccountState, AddressBook, MetadataMap, WalletState, WalletVersion } from './types';
 
-import { TONCENTER_ACTIONS_VERSION, TONCENTER_MAINNET_URL, TONCENTER_TESTNET_URL } from '../../../../config';
+import { TONCENTER_MAINNET_URL, TONCENTER_TESTNET_URL } from '../../../../config';
 import { buildTxId } from '../../../../util/activities';
 import { fetchJson } from '../../../../util/fetch';
 import { buildCollectionByKey, mapValues, split } from '../../../../util/iteratees';
@@ -27,11 +27,13 @@ const VERSION_MAP: Record<WalletVersion, ApiTonWalletVersion> = {
 export async function fetchAddressBook(network: ApiNetwork, addresses: string[]): Promise<AddressBook> {
   const chunks = split(addresses, ADDRESS_BOOK_CHUNK_SIZE);
 
-  const results = await Promise.all(chunks.map((chunk) => {
-    return callToncenterV3(network, '/addressBook', {
-      address: chunk,
-    });
-  }));
+  const results = await Promise.all(
+    chunks.map((chunk) => {
+      return callToncenterV3(network, '/addressBook', {
+        address: chunk,
+      });
+    }),
+  );
 
   return results.reduce((acc, value) => {
     return Object.assign(acc, value);
@@ -96,12 +98,12 @@ export function callToncenterV3<T = any>(network: ApiNetwork, path: string, data
 }
 
 export function getToncenterHeaders(network: ApiNetwork) {
-  const { apiHeaders, toncenterMainnetKey, toncenterTestnetKey } = getEnvironment();
+  const { toncenterMainnetKey, toncenterTestnetKey } = getEnvironment();
   const apiKey = network === 'testnet' ? toncenterTestnetKey : toncenterMainnetKey;
 
   return {
-    ...apiHeaders,
+    // ...apiHeaders,
     ...(apiKey && { 'X-Api-Key': apiKey }),
-    'X-Actions-Version': TONCENTER_ACTIONS_VERSION,
+    // 'X-Actions-Version': TONCENTER_ACTIONS_VERSION,
   };
 }
