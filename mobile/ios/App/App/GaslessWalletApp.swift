@@ -1,7 +1,7 @@
 import UIKit
 import Capacitor
 
-class MyTonWalletApp: UIApplication {
+class GaslessWalletApp: UIApplication {
 
     private var lastTouchEventTimestamp = TimeInterval(0)
 

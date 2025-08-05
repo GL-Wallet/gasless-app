@@ -7,24 +7,12 @@ import { APP_NAME, IS_CORE_WALLET } from '../../config';
 import renderText from '../../global/helpers/renderText';
 import buildClassName from '../../util/buildClassName';
 import { IS_LEDGER_SUPPORTED } from '../../util/windowEnvironment';
-import { ANIMATED_STICKERS_PATHS } from '../ui/helpers/animatedAssets';
 
-import useAppTheme from '../../hooks/useAppTheme';
-import useFlag from '../../hooks/useFlag';
 import useLang from '../../hooks/useLang';
-import useShowTransition from '../../hooks/useShowTransition';
 
-import AnimatedIconWithPreview from '../ui/AnimatedIconWithPreview';
 import Button from '../ui/Button';
 
 import styles from './Auth.module.scss';
-
-import logoDarkPath from '../../assets/logoDark.svg';
-import logoLightPath from '../../assets/logoLight.svg';
-
-interface OwnProps {
-  isActive?: boolean;
-}
 
 interface StateProps {
   hasAccounts?: boolean;
@@ -33,11 +21,9 @@ interface StateProps {
 }
 
 function AuthStart({
-  isActive,
   hasAccounts,
   isLoading,
-  theme,
-}: OwnProps & StateProps) {
+}: StateProps) {
   const {
     startCreatingWallet,
     startImportingWallet,
@@ -48,10 +34,6 @@ function AuthStart({
   } = getActions();
 
   const lang = useLang();
-  const appTheme = useAppTheme(theme);
-  const logoPath = appTheme === 'light' ? logoLightPath : logoDarkPath;
-  const [isLogoReady, markLogoReady] = useFlag();
-  const { transitionClassNames } = useShowTransition(isLogoReady, undefined, undefined, 'slow');
 
   function renderSimpleImportForm() {
     return (
@@ -84,23 +66,6 @@ function AuthStart({
           <i className={buildClassName(styles.iconChevron, 'icon-chevron-left')} aria-hidden />
           <span>{lang('Back')}</span>
         </Button>
-      )}
-
-      {IS_CORE_WALLET ? (
-        <AnimatedIconWithPreview
-          play={isActive}
-          tgsUrl={ANIMATED_STICKERS_PATHS.coreWalletLogo}
-          previewUrl={ANIMATED_STICKERS_PATHS.coreWalletLogoPreview}
-          noLoop={false}
-          nonInteractive
-        />
-      ) : (
-        <img
-          src={logoPath}
-          alt={APP_NAME}
-          className={buildClassName(styles.logo, transitionClassNames)}
-          onLoad={markLogoReady}
-        />
       )}
 
       <div className={buildClassName(styles.appName, 'rounded-font')}>{APP_NAME}</div>
@@ -144,10 +109,11 @@ function AuthStart({
   );
 }
 
-export default memo(withGlobal<OwnProps>((global): StateProps => {
+export default memo(withGlobal((global): StateProps => {
   return {
     hasAccounts: Boolean(global.currentAccountId),
     isLoading: global.auth.isLoading,
     theme: global.settings.theme,
   };
+// eslint-disable-next-line teactn/prefer-separate-component-file
 })(AuthStart));

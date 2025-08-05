@@ -33,10 +33,10 @@ platform :ios do
     update_code_signing_settings(
       path: "App.xcodeproj",
       use_automatic_signing: false,
-      profile_name: "MyTonWallet Production profile",
+      profile_name: "GaslessWallet Production profile",
       build_configurations: ["Debug"],
       sdk: "iphoneos*",
-      team_id: "Y54Z4K69Z9",
+      team_id: "DQ76TFMQ8L",
       code_sign_identity: "iPhone Distribution"
     )
   end
@@ -46,7 +46,7 @@ platform :ios do
 
     build_app(
       workspace: "App.xcworkspace",
-      scheme: "MyTonWallet",
+      scheme: "GaslessWallet",
       export_method: "app-store",
       export_options: {
         provisioningProfiles: {
@@ -58,7 +58,7 @@ platform :ios do
     changelog_from_git_commits(merge_commit_filtering: "exclude_merges", commits_count: 3)
     upload_to_testflight(
       distribute_external: true,
-      groups: "MTW external group",
+      groups: "GaslessWallet external group",
       beta_app_description: "Bug fixes and performance improvements"
     )
   end
@@ -75,11 +75,11 @@ platform :ios do
 
     build_app(
       workspace: "App.xcworkspace",
-      scheme: "MyTonWallet",
+      scheme: "GaslessWallet",
       export_method: "app-store",
       export_options: {
         provisioningProfiles: {
-          "org.mytonwallet.app" => "MyTonWallet Production profile",
+          "io.gaslesswallet" => "GaslessWallet Production profile",
         }
       }
     )

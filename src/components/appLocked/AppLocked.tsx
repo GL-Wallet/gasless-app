@@ -1,3 +1,4 @@
+/* eslint-disable teactn/prefer-separate-component-file */
 import { BottomSheet } from '@mytonwallet/native-bottom-sheet';
 import React, {
   memo, useEffect, useMemo, useRef, useState,
@@ -176,7 +177,6 @@ function useContentSlide(
 function AppLocked({
   isNonNativeBiometricAuthEnabled,
   autolockValue = 'never',
-  theme,
   isManualLockActive,
   isAppLockEnabled,
   shouldHideBiometrics,
@@ -304,7 +304,6 @@ function AppLocked({
             ? (
               <UnlockButtonSlide
                 ref={ref}
-                theme={theme}
                 innerContentTopPosition={innerContentTopPosition}
                 handleChangeSlideForBiometricAuth={handleChangeSlideForBiometricAuth}
               />
@@ -313,7 +312,6 @@ function AppLocked({
               <PasswordFormSlide
                 ref={ref}
                 isActive={isActive}
-                theme={theme}
                 innerContentTopPosition={innerContentTopPosition}
                 shouldHideBiometrics={!!shouldHideBiometrics}
                 onSubmit={unlock}

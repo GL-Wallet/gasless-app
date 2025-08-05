@@ -71,7 +71,7 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx,js}": "eslint --fix",
+    "*.{ts,tsx,js}": "eslint --fix --no-cache",
     "*.{css,scss}": "stylelint --fix"
   },
   "author": "MyTonWallet",

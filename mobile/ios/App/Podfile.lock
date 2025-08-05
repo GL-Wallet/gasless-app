@@ -25,8 +25,6 @@ PODS:
     - Capacitor
   - CapacitorPluginSafeArea (4.0.0):
     - Capacitor
-  - CapacitorPushNotifications (7.0.0):
-    - Capacitor
   - CapacitorSecureStoragePlugin (0.11.0):
     - Capacitor
     - SwiftKeychainWrapper
@@ -149,7 +147,6 @@ DEPENDENCIES:
   - "CapacitorMlkitBarcodeScanning (from `../../../node_modules/@capacitor-mlkit/barcode-scanning`)"
   - CapacitorNativeSettings (from `../../../node_modules/capacitor-native-settings`)
   - CapacitorPluginSafeArea (from `../../../node_modules/capacitor-plugin-safe-area`)
-  - "CapacitorPushNotifications (from `../../../node_modules/@capacitor/push-notifications`)"
   - CapacitorSecureStoragePlugin (from `../../../node_modules/capacitor-secure-storage-plugin`)
   - "CapacitorShare (from `../../../node_modules/@capacitor/share`)"
   - "CapacitorSplashScreen (from `../../../node_modules/@capacitor/splash-screen`)"
@@ -210,8 +207,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/capacitor-native-settings"
   CapacitorPluginSafeArea:
     :path: "../../../node_modules/capacitor-plugin-safe-area"
-  CapacitorPushNotifications:
-    :path: "../../../node_modules/@capacitor/push-notifications"
   CapacitorSecureStoragePlugin:
     :path: "../../../node_modules/capacitor-secure-storage-plugin"
   CapacitorShare:
@@ -257,7 +252,6 @@ SPEC CHECKSUMS:
   CapacitorMlkitBarcodeScanning: 8ed3b0c5b015c0f65ecdaf8d99aaa08b4e647693
   CapacitorNativeSettings: bef37b3c7e2184da7416a3f162c71de19fd27593
   CapacitorPluginSafeArea: 22031c3436269ca80fac90ec2c94bc7c1e59a81d
-  CapacitorPushNotifications: 2e0132cd2f1a5d696bcbfc3725c2b6ffcb9275d4
   CapacitorSecureStoragePlugin: 450d402026ee3bcc018fa206504d9c0572fee78d
   CapacitorShare: d94c53d7656f1ce8f6712ae8d19ab0c18a69259f
   CapacitorSplashScreen: 7e7a0a1113833032f196b3af6fa437baccacf5bc
@@ -287,6 +281,6 @@ SPEC CHECKSUMS:
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
 
-PODFILE CHECKSUM: 717d09e683cb12c1762093716186ac18aec151f8
+PODFILE CHECKSUM: 4a12205a343011e76bcf7f2ed67567df84067b6d
 
 COCOAPODS: 1.16.2

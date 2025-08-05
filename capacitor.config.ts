@@ -13,7 +13,7 @@ const COMMON_PLUGINS = [
   '@capacitor/filesystem',
   '@capacitor/haptics',
   '@capacitor/keyboard',
-  '@capacitor/push-notifications',
+  // '@capacitor/push-notifications', // Temporarily disabled
   '@capacitor/share',
   '@capacitor/status-bar',
   '@capawesome/capacitor-torch',
@@ -33,12 +33,12 @@ const IOS_PLUGINS = [
 ];
 
 const config: CapacitorConfig = {
-  appId: 'org.mytonwallet.app',
-  appName: 'MyTonWallet',
+  appId: 'io.gaslesswallet',
+  appName: 'Gasless Wallet',
   webDir: 'dist',
   server: {
     androidScheme: 'https',
-    hostname: 'mytonwallet.local',
+    hostname: 'gaslesswallet.local',
   },
   android: {
     path: 'mobile/android',
@@ -48,7 +48,7 @@ const config: CapacitorConfig = {
   ios: {
     path: 'mobile/ios',
     includePlugins: COMMON_PLUGINS.concat(IOS_PLUGINS),
-    scheme: 'MyTonWallet',
+    scheme: 'GaslessWallet',
     webContentsDebuggingEnabled: APP_ENV !== 'production',
     // This parameter fixes a problem occurring with Capacitor 7. Without it, the Delegated Bottom Sheet steals the
     // focus from the main WebView for a second at the application start. This focus behavior broke the app logic that
@@ -63,9 +63,9 @@ const config: CapacitorConfig = {
     CapacitorHttp: {
       enabled: true,
     },
-    PushNotifications: {
-      presentationOptions: [],
-    },
+    // PushNotifications: {
+    //   presentationOptions: [],
+    // },
     Keyboard: {
       // Needed to disable the automatic focus scrolling on iOS. The scroll is controlled manually by focusScroll.ts
       // for a better focus scroll control.
