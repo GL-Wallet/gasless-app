@@ -38,7 +38,7 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   server: {
     androidScheme: 'https',
-    hostname: 'gaslesswallet.local',
+    hostname: 'mytonwallet.local',
   },
   android: {
     path: 'mobile/android',
