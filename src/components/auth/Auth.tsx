@@ -1,7 +1,7 @@
 import React, { memo, useState } from '../../lib/teact/teact';
 import { getActions, withGlobal } from '../../global';
 
-import type { GlobalState, Theme } from '../../global/types';
+import type { GlobalState } from '../../global/types';
 import { AuthState } from '../../global/types';
 
 import { pick } from '../../util/iteratees';
@@ -34,11 +34,11 @@ import styles from './Auth.module.scss';
 
 type StateProps = Pick<GlobalState['auth'], (
   'state' | 'biometricsStep' | 'error' | 'mnemonic' | 'mnemonicCheckIndexes' | 'isLoading' | 'method'
-)> & { theme: Theme };
+)>;
 
 const RENDER_COUNT = Object.keys(AuthState).length / 2;
 
-const Auth = ({
+function Auth({
   state,
   biometricsStep,
   error,
@@ -46,8 +46,7 @@ const Auth = ({
   mnemonic,
   mnemonicCheckIndexes,
   method,
-  theme,
-}: StateProps) => {
+}: StateProps) {
   const {
     closeAbout,
     closeImportViewAccount,
@@ -155,7 +154,6 @@ const Auth = ({
         return (
           <SettingsAbout
             isActive={isActive}
-            theme={theme}
             headerClassName={styles.aboutHeader}
             handleBackClick={closeAbout}
           />
@@ -193,7 +191,7 @@ const Auth = ({
       {renderAuthScreen}
     </Transition>
   );
-};
+}
 
 export default memo(withGlobal((global): StateProps => {
   const authProps = pick(global.auth, [
@@ -201,6 +199,5 @@ export default memo(withGlobal((global): StateProps => {
   ]);
   return {
     ...authProps,
-    theme: global.settings.theme,
   };
 })(Auth));

@@ -1,3 +1,4 @@
+/* eslint-disable no-extend-native */
 import { BIGINT_PREFIX } from './bigint';
 
 // Fixes serialization of objects containing `bigint` values.

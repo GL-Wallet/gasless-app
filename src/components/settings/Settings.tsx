@@ -16,16 +16,16 @@ import {
   APP_ENV_MARKER,
   APP_NAME,
   APP_VERSION,
-  HELPCENTER_URL,
+  // HELPCENTER_URL,
   IS_CAPACITOR,
   IS_CORE_WALLET,
   IS_EXTENSION,
   LANG_LIST,
-  MTW_CARDS_WEBSITE,
-  MTW_TIPS_CHANNEL_NAME,
+  // MTW_CARDS_WEBSITE,
+  // MTW_TIPS_CHANNEL_NAME,
   PROXY_HOSTS,
   SHOULD_SHOW_ALL_ASSETS_AND_ACTIVITY,
-  SUPPORT_USERNAME,
+  // SUPPORT_USERNAME,
   TELEGRAM_WEB_URL,
   TONCOIN,
 } from '../../config';
@@ -100,19 +100,19 @@ import assetsActivityImg from '../../assets/settings/settings_assets-activity.sv
 import connectedDappsImg from '../../assets/settings/settings_connected-dapps.svg';
 import disclaimerImg from '../../assets/settings/settings_disclaimer.svg';
 import exitImg from '../../assets/settings/settings_exit.svg';
-import helpcenterImg from '../../assets/settings/settings_helpcenter.svg';
+// import helpcenterImg from '../../assets/settings/settings_helpcenter.svg';
 import installAppImg from '../../assets/settings/settings_install-app.svg';
 import installDesktopImg from '../../assets/settings/settings_install-desktop.svg';
 import installMobileImg from '../../assets/settings/settings_install-mobile.svg';
 import languageImg from '../../assets/settings/settings_language.svg';
 import ledgerImg from '../../assets/settings/settings_ledger.svg';
-import mtwCardsImg from '../../assets/settings/settings_mtw-cards.svg';
+// import mtwCardsImg from '../../assets/settings/settings_mtw-cards.svg';
 import upgradeImg from '../../assets/settings/settings_mytonwallet.svg';
 import notifications from '../../assets/settings/settings_notifications.svg';
 import securityImg from '../../assets/settings/settings_security.svg';
-import supportImg from '../../assets/settings/settings_support.svg';
+// import supportImg from '../../assets/settings/settings_support.svg';
 import telegramImg from '../../assets/settings/settings_telegram-menu.svg';
-import tipsImg from '../../assets/settings/settings_tips.svg';
+// import tipsImg from '../../assets/settings/settings_tips.svg';
 import tonLinksImg from '../../assets/settings/settings_ton-links.svg';
 import tonMagicImg from '../../assets/settings/settings_ton-magic.svg';
 import tonProxyImg from '../../assets/settings/settings_ton-proxy.svg';
@@ -132,7 +132,6 @@ type StateProps = {
   currentVersion?: ApiTonWalletVersion;
   versions?: ApiWalletWithVersionInfo[];
   isCopyStorageEnabled?: boolean;
-  supportAccountsCount?: number;
   hardwareWallets?: LedgerWalletInfo[];
   accounts?: Record<string, Account>;
   hardwareState?: HardwareConnectState;
@@ -140,12 +139,11 @@ type StateProps = {
   isTonAppConnected?: boolean;
   isRemoteTab?: boolean;
   arePushNotificationsAvailable?: boolean;
-  isNftBuyingDisabled?: boolean;
   isViewMode: boolean;
 };
 
 const AMOUNT_OF_CLICKS_FOR_DEVELOPERS_MODE = 5;
-const SUPPORT_ACCOUNTS_COUNT_DEFAULT = 1;
+// const SUPPORT_ACCOUNTS_COUNT_DEFAULT = 1;
 
 function Settings({
   settings: {
@@ -168,7 +166,6 @@ function Settings({
   currentVersion,
   versions,
   isCopyStorageEnabled,
-  supportAccountsCount = SUPPORT_ACCOUNTS_COUNT_DEFAULT,
   accounts,
   hardwareWallets,
   hardwareState,
@@ -176,7 +173,6 @@ function Settings({
   isTonAppConnected,
   isRemoteTab,
   arePushNotificationsAvailable,
-  isNftBuyingDisabled,
   isViewMode,
 }: OwnProps & StateProps) {
   const {
@@ -618,7 +614,7 @@ function Settings({
 
           {!IS_CORE_WALLET && (
             <>
-              {!isNftBuyingDisabled && (
+              {/* {!isNftBuyingDisabled && (
                 <div className={styles.block}>
                   <a
                     href={MTW_CARDS_WEBSITE}
@@ -632,8 +628,8 @@ function Settings({
                     <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
                   </a>
                 </div>
-              )}
-              <div className={styles.block}>
+              )} */}
+              {/* <div className={styles.block}>
                 <a
                   href={`https://t.me/${MTW_TIPS_CHANNEL_NAME[langCode as never] ?? MTW_TIPS_CHANNEL_NAME.en}`}
                   target="_blank"
@@ -672,7 +668,7 @@ function Settings({
                     </div>
                   </a>
                 )}
-              </div>
+              </div> */}
             </>
           )}
 
@@ -819,7 +815,6 @@ function Settings({
             isActive={isSlideActive}
             handleBackClick={handleBackClick}
             isInsideModal={isInsideModal}
-            theme={theme}
           />
         );
       case SettingsState.Disclaimer:
@@ -919,7 +914,7 @@ function Settings({
 export default memo(withGlobal<OwnProps>((global): StateProps => {
   const isPasswordAccount = selectIsPasswordAccount(global);
   const accounts = selectNetworkAccounts(global);
-  const { isCopyStorageEnabled, supportAccountsCount = 1, isNftBuyingDisabled } = global.restrictions;
+  const { isCopyStorageEnabled } = global.restrictions;
 
   const { currentVersion, byId: versionsById } = global.walletVersions ?? {};
   const versions = versionsById?.[global.currentAccountId!];
@@ -941,14 +936,12 @@ export default memo(withGlobal<OwnProps>((global): StateProps => {
     currentVersion,
     versions,
     isCopyStorageEnabled,
-    supportAccountsCount,
     hardwareState,
     isLedgerConnected,
     isTonAppConnected,
     isRemoteTab,
     hardwareWallets,
     accounts,
-    isNftBuyingDisabled,
     arePushNotificationsAvailable: global.pushNotifications.isAvailable,
     isViewMode: selectIsCurrentAccountViewMode(global),
   };
