@@ -16,7 +16,7 @@ import { handleServerError } from '../../errors';
 import { getTrc20Balance, getWalletBalance } from './wallet';
 import type { ApiSubmitTransferTronResult } from './types';
 import { hexToString } from '../../../util/stringFormat';
-import { ONE_TRX, TRON_GAS } from './constants';
+import { ONE_TRX } from './constants';
 import { fetchGaslessTransferInfo, submitGaslessTransfer } from '../../methods/gasless';
 
 const SIGNATURE_SIZE = 65;
@@ -176,10 +176,6 @@ async function estimateTrc20TransferFee(
 
   let { amount } = options;
   const tokenBalance = await getTrc20Balance(network, tokenAddress, fromAddress);
-
-  if (!tokenBalance) {
-    return TRON_GAS.transferTrc20Estimated;
-  }
 
   if (amount === undefined || amount > tokenBalance) {
     amount = 1n;
