@@ -17,7 +17,6 @@ import {
   APP_NAME,
   APP_VERSION,
   // HELPCENTER_URL,
-  IS_CAPACITOR,
   IS_CORE_WALLET,
   IS_EXTENSION,
   LANG_LIST,
@@ -102,7 +101,6 @@ import disclaimerImg from '../../assets/settings/settings_disclaimer.svg';
 import exitImg from '../../assets/settings/settings_exit.svg';
 // import helpcenterImg from '../../assets/settings/settings_helpcenter.svg';
 import installAppImg from '../../assets/settings/settings_install-app.svg';
-import installDesktopImg from '../../assets/settings/settings_install-desktop.svg';
 import installMobileImg from '../../assets/settings/settings_install-mobile.svg';
 import languageImg from '../../assets/settings/settings_language.svg';
 import ledgerImg from '../../assets/settings/settings_ledger.svg';
@@ -329,10 +327,6 @@ function Settings({
 
   function handleClickInstallApp() {
     void openUrl('https://mytonwallet.io/get', { isExternal: true });
-  }
-
-  function handleClickInstallOnDesktop() {
-    void openUrl('https://mytonwallet.io/get/desktop', { isExternal: true });
   }
 
   function handleClickInstallOnMobile() {
@@ -681,16 +675,7 @@ function Settings({
             </div>
           </div>
 
-          {!IS_CORE_WALLET && IS_CAPACITOR && (
-            <div className={styles.block}>
-              <div className={styles.item} onClick={handleClickInstallOnDesktop}>
-                <img className={styles.menuIcon} src={installDesktopImg} alt={lang('Install on Desktop')} />
-                {lang('Install on Desktop')}
-
-                <i className={buildClassName(styles.iconChevronRight, 'icon-chevron-right')} aria-hidden />
-              </div>
-            </div>
-          )}
+          {/* 'Install on Desktop' item removed */}
 
           {!IS_CORE_WALLET && IS_ELECTRON && (
             <div className={styles.block}>

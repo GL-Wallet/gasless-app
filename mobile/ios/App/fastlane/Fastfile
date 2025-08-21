@@ -36,7 +36,7 @@ platform :ios do
       profile_name: "GaslessWallet Production profile",
       build_configurations: ["Debug"],
       sdk: "iphoneos*",
-      team_id: "DQ76TFMQ8L",
+      team_id: "5CS3ZQXRCY",
       code_sign_identity: "iPhone Distribution"
     )
   end
@@ -50,7 +50,7 @@ platform :ios do
       export_method: "app-store",
       export_options: {
         provisioningProfiles: {
-          "org.mytonwallet.app" => "MyTonWallet Production profile",
+          "gaslesswallet" => "GaslessWallet Production profile",
         }
       }
     )
@@ -79,7 +79,7 @@ platform :ios do
       export_method: "app-store",
       export_options: {
         provisioningProfiles: {
-          "io.gaslesswallet" => "GaslessWallet Production profile",
+          "gaslesswallet" => "GaslessWallet Production profile",
         }
       }
     )

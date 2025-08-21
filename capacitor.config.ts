@@ -33,7 +33,7 @@ const IOS_PLUGINS = [
 ];
 
 const config: CapacitorConfig = {
-  appId: 'io.gaslesswallet',
+  appId: 'gaslesswallet',
   appName: 'Gasless Wallet',
   webDir: 'dist',
   server: {

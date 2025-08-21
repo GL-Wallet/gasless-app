@@ -49,8 +49,7 @@ export const IS_WEB = !IS_CAPACITOR && !IS_ELECTRON && !IS_EXTENSION && !IS_TELE
 export const DEFAULT_LANG_CODE = 'en';
 export const USER_AGENT_LANG_CODE = getBrowserLanguage();
 export const DPR = window.devicePixelRatio || 1;
-export const IS_LEDGER_SUPPORTED = IS_CAPACITOR
-  || !(IS_CORE_WALLET || IS_IOS || IS_FIREFOX_EXTENSION || IS_TELEGRAM_APP);
+export const IS_LEDGER_SUPPORTED = false;
 export const IS_LEDGER_EXTENSION_TAB = global.location.hash.startsWith('#detached');
 // Disable biometric auth on electron for now until this issue is fixed:
 // https://github.com/electron/electron/issues/24573

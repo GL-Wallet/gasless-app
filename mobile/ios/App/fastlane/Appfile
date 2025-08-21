@@ -1,8 +1,8 @@
-app_identifier("io.gaslesswallet") # The bundle identifier of your app
-apple_id("studentmv94@gmail.com") # Your Apple Developer Portal username
+app_identifier("gaslesswallet") # The bundle identifier of your app
+apple_id("ceo@xpaid.org") # Your Apple Developer Portal username
 
-# itc_team_id("126235213") # App Store Connect Team ID
-team_id("DQ76TFMQ8L") # Developer Portal Team ID
+itc_team_id("5CS3ZQXRCY") # App Store Connect Team ID
+team_id("5CS3ZQXRCY") # Developer Portal Team ID
 
 # For more information about the Appfile, see:
 #     https://docs.fastlane.tools/advanced/#appfile

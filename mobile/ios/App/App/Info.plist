@@ -22,13 +22,13 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>io.gaslesswallet</string>
+			<string>gaslesswallet</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>ton</string>
+				<string>tron</string>
 				<string>tc</string>
-				<string>mytonwallet-tc</string>
-				<string>mtw</string>
+				<string>gaslesswallet-tc</string>
+				<string>gaslesswallet</string>
 			</array>
 		</dict>
 	</array>
