@@ -47,10 +47,7 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Photo library access is needed to download NFTs.</string>
 	<key>UIBackgroundModes</key>
-	<array>
-		<string>bluetooth-central</string>
-		<!-- Temporarily disabled: <string>remote-notification</string> -->
-	</array>
+	<array/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen.storyboard</string>
 	<key>UIMainStoryboardFile</key>
