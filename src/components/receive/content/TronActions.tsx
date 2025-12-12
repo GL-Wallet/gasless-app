@@ -43,9 +43,10 @@ function TronActions({
   const lang = useLang();
 
   const canBuyWithCard = countryCode !== 'RU';
-  const isSwapAllowed = !isTestnet && !isLedger && !isSwapDisabled;
+  // Force-disable swap and on-ramp buttons while keeping static render logic intact
+  const isSwapAllowed = false && !isTestnet && !isLedger && !isSwapDisabled;
   // TRX purchase is not possible via the Dreamwalkers service (Russian), however in static mode we show the buy button
-  const isOnRampAllowed = !isTestnet && !isOnRampDisabled && (canBuyWithCard || isStatic);
+  const isOnRampAllowed = false && !isTestnet && !isOnRampDisabled && (canBuyWithCard || isStatic);
   const shouldRender = Boolean(isSwapAllowed || isOnRampAllowed || isStatic);
 
   const handleBuyFiat = useLastCallback(() => {

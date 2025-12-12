@@ -40,8 +40,9 @@ function TonActions({
 
   const lang = useLang();
 
-  const isSwapAllowed = !isTestnet && !isLedger && !isSwapDisabled;
-  const isOnRampAllowed = !isTestnet && !isOnRampDisabled;
+  // Force-disable swap and on-ramp buttons while keeping other actions working
+  const isSwapAllowed = false && !isTestnet && !isLedger && !isSwapDisabled;
+  const isOnRampAllowed = false && !isTestnet && !isOnRampDisabled;
 
   const handleBuyFiat = useLastCallback(() => {
     openOnRampWidgetModal({ chain: 'ton' });
